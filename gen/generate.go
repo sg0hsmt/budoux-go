@@ -1,3 +1,6 @@
+//go:build go1.13
+// +build go1.13
+
 //go:generate go run .
 //go:generate gofmt -s -w ../unicode_blocks.go
 //go:generate gofmt -s -w ../models/ja_knbc.go
