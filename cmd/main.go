@@ -19,7 +19,10 @@ func main() {
 	flags := flag.NewFlagSet(os.Args[0], flag.ExitOnError)
 	flags.StringVar(&in, "in", "", "input string")
 	flags.StringVar(&path, "model", "", "path of model file (default: internal model)")
-	flags.Parse(os.Args[1:])
+
+	if err := flags.Parse(os.Args[1:]); err != nil {
+		log.Fatalln("parse flags:", err)
+	}
 
 	var model budoux.Model
 
