@@ -10,7 +10,7 @@ BudouX-Go supported plain text only, not supports html inputs.
 
 ## Demo
 
-TBD
+https://sg0hsmt.github.io/budoux-go/
 
 ## Requirement
 
