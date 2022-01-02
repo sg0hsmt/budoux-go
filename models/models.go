@@ -1,4 +1,4 @@
-// package models is trained machine learning model collections.
+// Package models is trained machine learning model collections.
 package models
 
 import "github.com/sg0hsmt/budoux-go"

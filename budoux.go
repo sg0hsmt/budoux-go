@@ -1,4 +1,4 @@
-// BudouX-Go is a golang port of [BudouX](https://github.com/google/budoux).
+// Package budoux is a golang port of [BudouX](https://github.com/google/budoux).
 package budoux
 
 // DefaultThreshold default threshold for splitting a sentence.
