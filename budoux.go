@@ -1,4 +1,12 @@
-// Package budoux is a golang port of [BudouX](https://github.com/google/budoux).
+/*
+Package budoux is a golang port of [BudouX](https://github.com/google/budoux) (machine learning powered line break organizer tool).
+
+Note:
+This project contains the deliverables of the [BudouX](https://github.com/google/budoux) project.
+
+Note:
+BudouX-Go supported plain text only, not supports html inputs.
+*/
 package budoux
 
 // DefaultThreshold default threshold for splitting a sentence.

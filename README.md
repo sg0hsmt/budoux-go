@@ -6,9 +6,7 @@
 [![License](https://img.shields.io/github/license/sg0hsmt/budoux-go.svg)](https://github.com/sg0hsmt/budoux-go/blob/master/LICENSE)
 [![Release](https://img.shields.io/github/release/sg0hsmt/budoux-go.svg)](https://github.com/sg0hsmt/budoux-go/releases/latest)
 
-BudouX-Go is a golang port of [BudouX](https://github.com/google/budoux).
-
-BudouX is the machine learning powered line break organizer tool.
+BudouX-Go is a golang port of [BudouX](https://github.com/google/budoux) (machine learning powered line break organizer tool).
 
 Note:
 This project contains the deliverables of the [BudouX](https://github.com/google/budoux) project.

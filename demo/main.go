@@ -33,11 +33,14 @@ func (h *demo) Render() app.UI {
 			app.P().Body(
 				app.Text("BudouX-Go is a golang port of "),
 				app.A().Text("BudouX").Href("https://github.com/google/budoux"),
-				app.Text("."),
+				app.Text(" (machine learning powered line break organizer tool)."),
 			),
 			app.P().Body(
 				app.Text("["),
 				app.A().Href("https://github.com/sg0hsmt/budoux-go").Text("GitHub"),
+				app.Text("]"),
+				app.Text("["),
+				app.A().Href("https://pkg.go.dev/github.com/sg0hsmt/budoux-go").Text("GoDoc"),
 				app.Text("]"),
 			),
 		),
