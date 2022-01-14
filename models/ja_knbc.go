@@ -3,7 +3,7 @@
 // This file is contains the deliverables of the [BudouX](https://github.com/google/budoux) project.
 //
 // BudouX | Apache License 2.0 | https://github.com/google/budoux/blob/main/LICENSE
-//
+
 package models
 
 import "github.com/sg0hsmt/budoux-go"
