@@ -1,6 +1,6 @@
 # BudouX-Go Demo
 
-Souce code of BudouX-Go demo page.
+Source code of BudouX-Go demo page.
 The demo page is build with [go-app](https://github.com/maxence-charriere/go-app).
 
 ## Requirement
