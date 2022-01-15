@@ -18,13 +18,59 @@ BudouX-Go supported plain text only, not supports html inputs.
 
 https://sg0hsmt.github.io/budoux-go/
 
+https://go.dev/play/p/PWcZH3eULL6
+
 ## Requirement
 
 Go 1.11 or later.
 
 ## Usage
 
-See [example_test.go](./example_test.go) and [cli](./cmd/).
+Import budoux and models.
+
+```go
+import (
+    "github.com/sg0hsmt/budoux-go"
+    "github.com/sg0hsmt/budoux-go/models"
+)
+```
+
+Split sentences with internal model.
+
+```go
+func Example() {
+    model := models.DefaultJapaneseModel()
+    words := budoux.Parse(model, "これはテストです。")
+
+    fmt.Printf("%q", words)
+    // Output:
+    // ["これは" "テストです。"]
+}
+```
+
+Load model from json file and split sentences using the loaded model.
+
+```go
+func Example() {
+    var model budoux.Model
+
+    // You can use your own custom model.
+    buf, err := ioutil.ReadFile(path_to_json)
+    if err != nil {
+      log.Fatalln("read model:", err)
+    }
+
+    if err := json.Unmarshal(buf, &model); err != nil {
+      log.Fatalln("unmarshal model:", err)
+    }
+
+    words := budoux.Parse(model, "これはテストです。")
+
+    fmt.Printf("%q", words)
+    // Output:
+    // ["これは" "テストです。"]
+}
+```
 
 ## Test
 
