@@ -2,6 +2,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/sg0hsmt/budoux-go.svg)](https://pkg.go.dev/github.com/sg0hsmt/budoux-go)
 [![Test](https://github.com/sg0hsmt/budoux-go/actions/workflows/test.yaml/badge.svg)](https://github.com/sg0hsmt/budoux-go/actions/workflows/test.yaml)
+[![TinyGo](https://github.com/sg0hsmt/budoux-go/actions/workflows/tinygo.yaml/badge.svg)](https://github.com/sg0hsmt/budoux-go/actions/workflows/tinygo.yaml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sg0hsmt/budoux-go)](https://goreportcard.com/report/github.com/sg0hsmt/budoux-go)
 [![License](https://img.shields.io/github/license/sg0hsmt/budoux-go.svg)](https://github.com/sg0hsmt/budoux-go/blob/master/LICENSE)
 [![Release](https://img.shields.io/github/release/sg0hsmt/budoux-go.svg)](https://github.com/sg0hsmt/budoux-go/releases/latest)
