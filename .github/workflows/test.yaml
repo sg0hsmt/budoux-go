@@ -18,14 +18,14 @@ jobs:
       GO111MODULE: on
     runs-on: ${{ matrix.platform }}
     steps:
-      - name: Install Go
-        uses: actions/setup-go@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
-      - name: Checkout code
-        uses: actions/checkout@v2
       - name: Test
         run: go test -race ./...
+      - name: Test (benchmark)
+        run: go test -bench . -benchmem
       - name: Test (demo)
         if: ${{ matrix.go-version == '1.x' }}
         run: go test -race ./...

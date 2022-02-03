@@ -28,3 +28,5 @@ jobs:
           tinygo-version: ${{ matrix.tinygo }}
       - name: Test
         run: tinygo test .
+      - name: Test (benchmark)
+        run: tinygo test -bench .
