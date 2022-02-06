@@ -33,14 +33,7 @@ func ParseWithThreshold(model Model, in string, threshold int) []string {
 		w5, b5 := getUnicodeBlockAndFeature(runes, i+1)
 		w6, b6 := getUnicodeBlockAndFeature(runes, i+2)
 
-		feature := getFeature(w1, w2, w3, w4, w5, w6, b1, b2, b3, b4, b5, b6, p1, p2, p3)
-		score := 0
-
-		for _, f := range feature {
-			if v, ok := model[f]; ok {
-				score += v
-			}
-		}
+		score := getScore(model, w1, w2, w3, w4, w5, w6, b1, b2, b3, b4, b5, b6, p1, p2, p3)
 
 		if score > threshold {
 			out = append(out, buf)
@@ -80,61 +73,73 @@ func getUnicodeBlockAndFeature(in []rune, index int) (string, string) {
 	return string(v), fmt.Sprintf("%03d", i)
 }
 
-// getFeature returns feature list.
-func getFeature(w1, w2, w3, w4, w5, w6, b1, b2, b3, b4, b5, b6, p1, p2, p3 string) []string {
-	return []string{
-		// UP is means unigram of previous results.
-		"UP1:" + p1,
-		"UP2:" + p2,
-		"UP3:" + p3,
-		// BP is means bigram of previous results.
-		"BP1:" + p1 + p2,
-		"BP2:" + p2 + p3,
-		// UW is means unigram of words.
-		"UW1:" + w1,
-		"UW2:" + w2,
-		"UW3:" + w3,
-		"UW4:" + w4,
-		"UW5:" + w5,
-		"UW6:" + w6,
-		// BW is means bigram of words.
-		"BW1:" + w2 + w3,
-		"BW2:" + w3 + w4,
-		"BW3:" + w4 + w5,
-		// TW is means trigram of words.
-		"TW1:" + w1 + w2 + w3,
-		"TW2:" + w2 + w3 + w4,
-		"TW3:" + w3 + w4 + w5,
-		"TW4:" + w4 + w5 + w6,
-		// UB is means unigram of unicode blocks.
-		"UB1:" + b1,
-		"UB2:" + b2,
-		"UB3:" + b3,
-		"UB4:" + b4,
-		"UB5:" + b5,
-		"UB6:" + b6,
-		// BB is means bigram of unicode blocks.
-		"BB1:" + b2 + b3,
-		"BB2:" + b3 + b4,
-		"BB3:" + b4 + b5,
-		// TB is means trigram of unicode blocks.
-		"TB1:" + b1 + b2 + b3,
-		"TB2:" + b2 + b3 + b4,
-		"TB3:" + b3 + b4 + b5,
-		"TB4:" + b4 + b5 + b6,
-		// UQ is combination of UP and UB.
-		"UQ1:" + p1 + b1,
-		"UQ2:" + p2 + b2,
-		"UQ3:" + p3 + b3,
-		// BQ is combination of UP and BB.
-		"BQ1:" + p2 + b2 + b3,
-		"BQ2:" + p2 + b3 + b4,
-		"BQ3:" + p3 + b2 + b3,
-		"BQ4:" + p3 + b3 + b4,
-		// TQ is combination of UP and TB.
-		"TQ1:" + p2 + b1 + b2 + b3,
-		"TQ2:" + p2 + b2 + b3 + b4,
-		"TQ3:" + p3 + b1 + b2 + b3,
-		"TQ4:" + p3 + b2 + b3 + b4,
-	}
+// getScore from features.
+func getScore(model Model, w1, w2, w3, w4, w5, w6, b1, b2, b3, b4, b5, b6, p1, p2, p3 string) int {
+	score := 0
+
+	// UP is means unigram of previous results.
+	score += model["UP1:"+p1]
+	score += model["UP2:"+p2]
+	score += model["UP3:"+p3]
+
+	// BP is means bigram of previous results.
+	score += model["BP1:"+p1+p2]
+	score += model["BP2:"+p2+p3]
+
+	// UW is means unigram of words.
+	score += model["UW1:"+w1]
+	score += model["UW2:"+w2]
+	score += model["UW3:"+w3]
+	score += model["UW4:"+w4]
+	score += model["UW5:"+w5]
+	score += model["UW6:"+w6]
+
+	// BW is means bigram of words.
+	score += model["BW1:"+w2+w3]
+	score += model["BW2:"+w3+w4]
+	score += model["BW3:"+w4+w5]
+
+	// TW is means trigram of words.
+	score += model["TW1:"+w1+w2+w3]
+	score += model["TW2:"+w2+w3+w4]
+	score += model["TW3:"+w3+w4+w5]
+	score += model["TW4:"+w4+w5+w6]
+
+	// UB is means unigram of unicode blocks.
+	score += model["UB1:"+b1]
+	score += model["UB2:"+b2]
+	score += model["UB3:"+b3]
+	score += model["UB4:"+b4]
+	score += model["UB5:"+b5]
+	score += model["UB6:"+b6]
+
+	// BB is means bigram of unicode blocks.
+	score += model["BB1:"+b2+b3]
+	score += model["BB2:"+b3+b4]
+	score += model["BB3:"+b4+b5]
+
+	// TB is means trigram of unicode blocks.
+	score += model["TB1:"+b1+b2+b3]
+	score += model["TB2:"+b2+b3+b4]
+	score += model["TB3:"+b3+b4+b5]
+	score += model["TB4:"+b4+b5+b6]
+
+	// UQ is combination of UP and UB.
+	score += model["UQ1:"+p1+b1]
+	score += model["UQ2:"+p2+b2]
+	score += model["UQ3:"+p3+b3]
+
+	// BQ is combination of UP and BB.
+	score += model["BQ1:"+p2+b2+b3]
+	score += model["BQ2:"+p2+b3+b4]
+	score += model["BQ3:"+p3+b2+b3]
+	score += model["BQ4:"+p3+b3+b4]
+
+	// TQ is combination of UP and TB.
+	score += model["TQ1:"+p2+b1+b2+b3]
+	score += model["TQ2:"+p2+b2+b3+b4]
+	score += model["TQ3:"+p3+b1+b2+b3]
+	score += model["TQ4:"+p3+b2+b3+b4]
+
+	return score
 }
