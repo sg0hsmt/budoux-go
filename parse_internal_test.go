@@ -51,6 +51,12 @@ func TestUnicodeBlockAndFeature(t *testing.T) {
 			char:    "",
 			feature: "999",
 		},
+		{
+			in:      "≠",
+			idx:     0,
+			char:    "≠",
+			feature: "079",
+		},
 	}
 
 	for _, v := range tbl {

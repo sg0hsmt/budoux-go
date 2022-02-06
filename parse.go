@@ -1,8 +1,8 @@
 package budoux
 
 import (
-	"fmt"
 	"sort"
+	"strconv"
 )
 
 // Parse returns splitted string slice from input.
@@ -70,7 +70,14 @@ func getUnicodeBlockAndFeature(in []rune, index int) (string, string) {
 		return v < unicodeBlocks[i]
 	})
 
-	return string(v), fmt.Sprintf("%03d", i)
+	switch {
+	case i < 10:
+		return string(v), "00" + strconv.Itoa(i)
+	case i < 100:
+		return string(v), "0" + strconv.Itoa(i)
+	default:
+		return string(v), strconv.Itoa(i)
+	}
 }
 
 // getScore from features.
