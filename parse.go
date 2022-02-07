@@ -3,6 +3,7 @@ package budoux
 import (
 	"sort"
 	"strconv"
+	"strings"
 )
 
 // Parse returns splitted string slice from input.
@@ -19,7 +20,9 @@ func ParseWithThreshold(model Model, in string, threshold int) []string {
 	}
 
 	out := []string{}
-	buf := string(runes[:3])
+
+	var buf strings.Builder
+	buf.WriteString(string(runes[:3]))
 
 	p1 := "U" // unknown
 	p2 := "U" // unknown
@@ -36,10 +39,12 @@ func ParseWithThreshold(model Model, in string, threshold int) []string {
 		score := getScore(model, w1, w2, w3, w4, w5, w6, b1, b2, b3, b4, b5, b6, p1, p2, p3)
 
 		if score > threshold {
-			out = append(out, buf)
-			buf = w4
+			out = append(out, buf.String())
+			buf.Reset()
+			buf.Grow(12) // Assume 4 characters
+			buf.WriteString(w4)
 		} else {
-			buf += w4
+			buf.WriteString(w4)
 		}
 
 		p1 = p2
@@ -52,8 +57,8 @@ func ParseWithThreshold(model Model, in string, threshold int) []string {
 		}
 	}
 
-	if buf != "" {
-		out = append(out, buf)
+	if buf.Len() != 0 {
+		out = append(out, buf.String())
 	}
 
 	return out
