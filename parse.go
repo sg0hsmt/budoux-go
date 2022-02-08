@@ -28,12 +28,13 @@ func ParseWithThreshold(model Model, in string, threshold int) []string {
 	p2 := "U" // unknown
 	p3 := "U" // unknown
 
+	w1, b1 := getUnicodeBlockAndFeature(runes, 0) // i-3
+	w2, b2 := getUnicodeBlockAndFeature(runes, 1) // i-2
+	w3, b3 := getUnicodeBlockAndFeature(runes, 2) // i-1
+	w4, b4 := getUnicodeBlockAndFeature(runes, 3) // i
+	w5, b5 := getUnicodeBlockAndFeature(runes, 4) // i+1
+
 	for i := 3; i < len(runes); i++ {
-		w1, b1 := getUnicodeBlockAndFeature(runes, i-3)
-		w2, b2 := getUnicodeBlockAndFeature(runes, i-2)
-		w3, b3 := getUnicodeBlockAndFeature(runes, i-1)
-		w4, b4 := getUnicodeBlockAndFeature(runes, i)
-		w5, b5 := getUnicodeBlockAndFeature(runes, i+1)
 		w6, b6 := getUnicodeBlockAndFeature(runes, i+2)
 
 		score := getScore(model, w1, w2, w3, w4, w5, w6, b1, b2, b3, b4, b5, b6, p1, p2, p3)
@@ -55,6 +56,12 @@ func ParseWithThreshold(model Model, in string, threshold int) []string {
 		} else {
 			p3 = "O" // negative
 		}
+
+		w1, b1 = w2, b2
+		w2, b2 = w3, b3
+		w3, b3 = w4, b4
+		w4, b4 = w5, b5
+		w5, b5 = w6, b6
 	}
 
 	if buf.Len() != 0 {
