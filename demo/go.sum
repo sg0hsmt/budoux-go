@@ -3,8 +3,8 @@ github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/gomarkdown/markdown v0.0.0-20210408062403-ad838ccf8cdd/go.mod h1:aii0r/K0ZnHv7G0KF7xy1v0A7s2Ljrb5byB7MO5p6TU=
 github.com/google/uuid v1.2.0 h1:qJYtXnJRWmpe7m/3XlyhrsLrEURqHRM2kxzoxXqyUDs=
 github.com/google/uuid v1.2.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/maxence-charriere/go-app/v9 v9.3.0 h1:PWNZWcme5hnMR9/cSdSRv+9WvPowETj0qhfy+3HCQRM=
-github.com/maxence-charriere/go-app/v9 v9.3.0/go.mod h1:zo0n1kh4OMKn7P+MrTUUi7QwUMU2HOfHsZ293TITtxI=
+github.com/maxence-charriere/go-app/v9 v9.3.3 h1:vo+1oohWMfTQ0S3eg9JOjuFEy1n3bVNgeDi4eHNfMzA=
+github.com/maxence-charriere/go-app/v9 v9.3.3/go.mod h1:zo0n1kh4OMKn7P+MrTUUi7QwUMU2HOfHsZ293TITtxI=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
