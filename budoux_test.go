@@ -23,7 +23,7 @@ func TestParse(t *testing.T) {
 		},
 		{
 			in:  "水と油",
-			out: []string{"水と油"},
+			out: []string{"水と", "油"},
 		},
 		{
 			in:  "水道水とミネラルウォーター",

@@ -15,26 +15,26 @@ func Parse(model Model, in string) []string {
 // ParseWithThreshold returns splitted string slice from input.
 func ParseWithThreshold(model Model, in string, threshold int) []string {
 	runes := []rune(in)
-	if len(runes) <= 3 {
+	if len(runes) <= 1 {
 		return []string{in}
 	}
 
 	out := []string{}
 
 	var buf strings.Builder
-	buf.WriteString(string(runes[:3]))
+	buf.WriteString(string(runes[:1]))
 
 	p1 := "U" // unknown
 	p2 := "U" // unknown
 	p3 := "U" // unknown
 
-	w1, b1 := getUnicodeBlockAndFeature(runes, 0) // i-3
-	w2, b2 := getUnicodeBlockAndFeature(runes, 1) // i-2
-	w3, b3 := getUnicodeBlockAndFeature(runes, 2) // i-1
-	w4, b4 := getUnicodeBlockAndFeature(runes, 3) // i
-	w5, b5 := getUnicodeBlockAndFeature(runes, 4) // i+1
+	w1, b1 := "", "999"                           // i-3
+	w2, b2 := "", "999"                           // i-2
+	w3, b3 := getUnicodeBlockAndFeature(runes, 0) // i-1
+	w4, b4 := getUnicodeBlockAndFeature(runes, 1) // i
+	w5, b5 := getUnicodeBlockAndFeature(runes, 2) // i+1
 
-	for i := 3; i < len(runes); i++ {
+	for i := 1; i < len(runes); i++ {
 		w6, b6 := getUnicodeBlockAndFeature(runes, i+2)
 
 		score := getScore(model, w1, w2, w3, w4, w5, w6, b1, b2, b3, b4, b5, b6, p1, p2, p3)
