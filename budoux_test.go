@@ -79,3 +79,31 @@ func TestParse(t *testing.T) {
 		})
 	}
 }
+
+func TestParseZhHans(t *testing.T) {
+	tbl := []struct {
+		in  string
+		out []string
+	}{
+		{
+			in:  "",
+			out: []string{""},
+		},
+		{
+			in:  "今天是晴天。",
+			out: []string{"今天", "是", "晴天。"},
+		},
+	}
+
+	model := models.DefaultSimplifiedChineseModel()
+	parser := budoux.New(model, budoux.DefaultThreshold)
+
+	for _, v := range tbl {
+		t.Run(v.in, func(t *testing.T) {
+			out := parser.Parse(v.in)
+			if !reflect.DeepEqual(out, v.out) {
+				t.Errorf("unmatch result:\nwant %q\n got %q", v.out, out)
+			}
+		})
+	}
+}
