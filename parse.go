@@ -2,9 +2,11 @@ package budoux
 
 import (
 	"sort"
-	"strconv"
-	"strings"
+	"unicode/utf8"
 )
+
+// invalidFeature invalid feature string.
+const invalidFeature = "▔"
 
 // Parse returns splitted string slice from input.
 // It is shorthand for budoux.ParseWithThreshold(model, in, budoux.DefaultThreshold).
@@ -14,38 +16,34 @@ func Parse(model Model, in string) []string {
 
 // ParseWithThreshold returns splitted string slice from input.
 func ParseWithThreshold(model Model, in string, threshold int) []string {
-	runes := []rune(in)
-	if len(runes) <= 1 {
+	if in == "" {
 		return []string{in}
 	}
 
 	out := []string{}
 
-	var buf strings.Builder
-	buf.WriteString(string(runes[:1]))
-
 	p1 := "U" // unknown
 	p2 := "U" // unknown
 	p3 := "U" // unknown
 
-	w1, b1 := "", "999"                           // i-3
-	w2, b2 := "", "999"                           // i-2
-	w3, b3 := getUnicodeBlockAndFeature(runes, 0) // i-1
-	w4, b4 := getUnicodeBlockAndFeature(runes, 1) // i
-	w5, b5 := getUnicodeBlockAndFeature(runes, 2) // i+1
+	w1, b1 := "", invalidFeature                       // i-3
+	w2, b2 := "", invalidFeature                       // i-2
+	w3, s3, b3 := getUnicodeBlockAndFeature(in, 0)     // i-1
+	w4, s4, b4 := getUnicodeBlockAndFeature(in, s3)    // i
+	w5, s5, b5 := getUnicodeBlockAndFeature(in, s3+s4) // i+1
 
-	for i := 1; i < len(runes); i++ {
-		w6, b6 := getUnicodeBlockAndFeature(runes, i+2)
+	start := 0
+	end := s3
+	next := s3 + s4 + s5
+
+	for s3 != 0 {
+		w6, s6, b6 := getUnicodeBlockAndFeature(in, next)
 
 		score := getScore(model, w1, w2, w3, w4, w5, w6, b1, b2, b3, b4, b5, b6, p1, p2, p3)
 
 		if score > threshold {
-			out = append(out, buf.String())
-			buf.Reset()
-			buf.Grow(12) // Assume 4 characters
-			buf.WriteString(w4)
-		} else {
-			buf.WriteString(w4)
+			out = append(out, in[start:end])
+			start = end
 		}
 
 		p1 = p2
@@ -59,37 +57,37 @@ func ParseWithThreshold(model Model, in string, threshold int) []string {
 
 		w1, b1 = w2, b2
 		w2, b2 = w3, b3
-		w3, b3 = w4, b4
-		w4, b4 = w5, b5
-		w5, b5 = w6, b6
+		w3, s3, b3 = w4, s4, b4
+		w4, s4, b4 = w5, s5, b5
+		w5, s5, b5 = w6, s6, b6
+
+		end += s3
+		next += s6
 	}
 
-	if buf.Len() != 0 {
-		out = append(out, buf.String())
+	if start < len(in) {
+		out = append(out, in[start:])
 	}
 
 	return out
 }
 
 // getUnicodeBlockAndFeature returns unicode character and block feature from rune slice.
-func getUnicodeBlockAndFeature(in []rune, index int) (string, string) {
+func getUnicodeBlockAndFeature(in string, index int) (string, int, string) {
 	if len(in) <= index {
-		return "", "999" // out of index.
+		return "", 0, invalidFeature // out of index.
 	}
 
-	v := in[index]
+	r, size := utf8.DecodeRuneInString(in[index:])
+	if r == utf8.RuneError {
+		return "", size, invalidFeature
+	}
+
 	i := sort.Search(len(unicodeBlocks), func(i int) bool {
-		return v < unicodeBlocks[i]
+		return r < unicodeBlocks[i]
 	})
 
-	switch {
-	case i < 10:
-		return string(v), "00" + strconv.Itoa(i)
-	case i < 100:
-		return string(v), "0" + strconv.Itoa(i)
-	default:
-		return string(v), strconv.Itoa(i)
-	}
+	return in[index : index+size], size, blockFeatures[i]
 }
 
 // getScore from features.

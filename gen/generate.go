@@ -34,6 +34,9 @@ package budoux
 
 // unicodeBlocks range of code points block.
 var unicodeBlocks = []rune{ {{range .Data}} {{.}}, {{end}} }
+
+// blockFeatures feature of unicode block.
+var blockFeatures = []string{ {{range $i, $v := .Data}} {{$i | printf "\"%03d\""}}, {{end}} }
 `))
 
 var modelsTemplate = template.Must(template.New("models").Parse(`

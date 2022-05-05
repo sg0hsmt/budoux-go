@@ -18,6 +18,14 @@ func TestParse(t *testing.T) {
 			out: []string{""},
 		},
 		{
+			in:  "字",
+			out: []string{"字"},
+		},
+		{
+			in:  "言葉",
+			out: []string{"言葉"},
+		},
+		{
 			in:  "日本語",
 			out: []string{"日本語"},
 		},

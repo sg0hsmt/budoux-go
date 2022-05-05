@@ -5,10 +5,10 @@ import (
 )
 
 func BenchmarkGetUnicodeBlockAndFeature(b *testing.B) {
-	in := []rune("日本語の文章をいい感じに分割します。")
+	in := "日本語の文章をいい感じに分割します。"
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		getUnicodeBlockAndFeature(in, 9)
+		getUnicodeBlockAndFeature(in, 27)
 	}
 }
