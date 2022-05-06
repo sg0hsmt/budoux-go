@@ -1,0 +1,22 @@
+{
+  "short_name": "BudouX-Go Demo",
+  "name": "BudouX-Go Demo",
+  "description": "Demo page for BudouX-Go",
+  "icons": [
+    {
+      "src": "https://github.com/identicons/sg0hsmt.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "scope": "/budoux-go/",
+  "start_url": "/budoux-go/",
+  "background_color": "#2d2c2c",
+  "theme_color": "#2d2c2c",
+  "display": "standalone"
+}
